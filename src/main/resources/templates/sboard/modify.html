@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+
+
+<!-- Begin Page Content -->
+<div th:block layout:fragment="content" class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Simple Board Modify Page </h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">SimpleBoard Modify</h6>
+        </div>
+        <div class="card-body">
+            <form action="/sboard/modify" method="post">
+            <div class="form-group">
+                <label>Bno</label>
+                <input type="text" class="form-control" th:name="bno" readonly th:value="${boardDTO.bno}">
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" th:name="title" th:value="${boardDTO.title}">
+            </div>
+            <div class="form-group">
+                <label>Writer</label>
+                <input type="text" class="form-control" th:name="writer" placeholder="Writer" readonly th:value="${boardDTO.writer}">
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                <textarea th:name="content" class="form-control" th:text="${boardDTO.content}"> </textarea>
+            </div>
+                <a th:href="${requestDTO.getLink('/sboard/list','','')}" class="btn btn-secondary"> List</a>
+                <button class="btn btn-primary">Modify</button>
+                <button class="btn btn-danger">Remove</button>
+            </form>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            console.log("register...");
+        })
+    </script>
+</div>
+<!-- /.container-fluid -->
+
+

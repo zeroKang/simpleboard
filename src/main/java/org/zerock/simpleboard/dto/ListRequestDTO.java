@@ -45,9 +45,9 @@ public class ListRequestDTO {
         uriComponents.queryParam("type", type);
         uriComponents.queryParam("keyword", keyword);
 
-        uriComponents.replaceQueryParam(key, value);
-
-
+        if(key != null && key.isEmpty() == false) {
+            uriComponents.replaceQueryParam(key, value);
+        }
         return uriComponents.toUriString();
 
     }

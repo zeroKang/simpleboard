@@ -50,9 +50,16 @@ public class SimpleBoardController {
         return "redirect:/sboard/list";
     }
 
-    @GetMapping({"/read"})
-    public void read(Long bno, ListRequestDTO listRequestDTO, Model model){
-        
+    @GetMapping({"/read", "/modify"})
+    public void read(Long bno, @ModelAttribute("requestDTO") ListRequestDTO listRequestDTO, Model model){
+
+        log.info("get read...." + bno);
+
+        SimpleBoardDTO simpleBoardDTO = simpleBoardService.get(bno);
+
+        log.info("simpleBoardDTO: " + simpleBoardDTO);
+
+        model.addAttribute("boardDTO", simpleBoardDTO);
 
     }
 
