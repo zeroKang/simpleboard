@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.zerock.simpleboard.domain.SimpleBoard;
 
 import java.util.List;
@@ -32,6 +35,9 @@ public class ListResponseDTO {
 
     private List<Integer> pageList;
 
+    private String type;
+    private String keyword;
+
     public ListResponseDTO(ListRequestDTO listRequestDTO, Page<SimpleBoard> result){
 
         boardList = result.getContent().stream().map(board -> new SimpleBoardDTO(board)).collect(Collectors.toList());
@@ -42,6 +48,10 @@ public class ListResponseDTO {
         page = listRequestDTO.getPage();
 
         size = listRequestDTO.getSize();
+
+        type = listRequestDTO.getType();
+
+        keyword = listRequestDTO.getKeyword();
 
         totalPage = result.getTotalPages();
 
@@ -62,5 +72,7 @@ public class ListResponseDTO {
 
         pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
     }
+
+
 }
 

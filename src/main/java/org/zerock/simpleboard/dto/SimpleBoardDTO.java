@@ -7,10 +7,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Builder
-@Getter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class SimpleBoardDTO {
 
     private Long bno;

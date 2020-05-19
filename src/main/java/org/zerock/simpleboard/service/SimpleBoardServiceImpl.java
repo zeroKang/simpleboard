@@ -87,7 +87,7 @@ import java.util.Optional;
             return listPage(listRequestDTO);
         }
 
-        PageRequest pageRequest = PageRequest.of(0,10, Sort.Direction.DESC, "bno");
+        Pageable pageRequest = listRequestDTO.getPageable(Sort.by("bno").descending());
 
         String[] typeArr = type.split("");
 

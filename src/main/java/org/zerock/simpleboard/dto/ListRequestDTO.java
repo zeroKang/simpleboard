@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Getter
 @Setter
@@ -33,6 +34,22 @@ public class ListRequestDTO {
     public Pageable getPageable(Sort sort){
 
         return PageRequest.of(page -1, size, sort);
+    }
+
+    public String getLink(String url, String key, Object value){
+
+        UriComponentsBuilder uriComponents = UriComponentsBuilder.newInstance();
+        uriComponents.path(url);
+        uriComponents.queryParam("page", page);
+        uriComponents.queryParam("size", size);
+        uriComponents.queryParam("type", type);
+        uriComponents.queryParam("keyword", keyword);
+
+        uriComponents.replaceQueryParam(key, value);
+
+
+        return uriComponents.toUriString();
+
     }
 
 }
