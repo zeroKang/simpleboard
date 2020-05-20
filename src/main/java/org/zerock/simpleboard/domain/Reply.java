@@ -9,7 +9,8 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "replyBoard")
+@Table(indexes = {@Index(name="idx_reply_board", columnList = "reply_board_bno")})
 public class Reply extends BaseEntity{
 
     @Id
