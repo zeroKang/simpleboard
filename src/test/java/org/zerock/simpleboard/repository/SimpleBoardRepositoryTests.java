@@ -27,7 +27,9 @@ public class SimpleBoardRepositoryTests {
     @Test
     public void insertDummies(){
 
-        IntStream.rangeClosed(1,100).forEach(i -> {
+
+
+        IntStream.rangeClosed(1,500).forEach(i -> {
             SimpleBoard board = SimpleBoard.builder().title("Title..." + i).content("Content..." +i)
                     .writer("user" + (i % 10)).build();
             System.out.println(repository.save(board));

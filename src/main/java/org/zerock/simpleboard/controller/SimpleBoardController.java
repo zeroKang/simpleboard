@@ -63,5 +63,29 @@ public class SimpleBoardController {
 
     }
 
+    @PostMapping("/modify")
+    public String modifyPOST(SimpleBoardDTO simpleBoardDTO,
+                             ListRequestDTO listRequestDTO,
+                             RedirectAttributes redirectAttributes){
+
+        log.info("modify post....." + simpleBoardDTO);
+        log.info("requestDTO: " , listRequestDTO);
+        simpleBoardService.modify(simpleBoardDTO);
+        redirectAttributes.addFlashAttribute("result", "success");
+
+        return "redirect:" + listRequestDTO.getLink("/sboard/read","bno",simpleBoardDTO.getBno());
+    }
+
+    @PostMapping("/remove")
+    public String removePOST(Long bno, RedirectAttributes redirectAttributes){
+
+        log.info("remove post ..." + bno);
+
+        simpleBoardService.remove(bno);
+
+        redirectAttributes.addFlashAttribute("result", "success");
+        return "redirect:/sboard/list";
+    }
+
 
 }

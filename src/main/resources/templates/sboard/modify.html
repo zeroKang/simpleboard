@@ -15,8 +15,13 @@
             <h6 class="m-0 font-weight-bold text-primary">SimpleBoard Modify</h6>
         </div>
         <div class="card-body">
-            <form action="/sboard/modify" method="post">
-            <div class="form-group">
+            <form id="actionForm" action="/sboard/modify" method="post">
+                <input type="hidden" name="page" th:value="${requestDTO.page}">
+                <input type="hidden" name="size" th:value="${requestDTO.size}">
+                <input type="hidden" name="type" th:value="${requestDTO.type}">
+                <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
+
+                <div class="form-group">
                 <label>Bno</label>
                 <input type="text" class="form-control" th:name="bno" readonly th:value="${boardDTO.bno}">
             </div>
@@ -33,16 +38,27 @@
                 <textarea th:name="content" class="form-control" th:text="${boardDTO.content}"> </textarea>
             </div>
                 <a th:href="${requestDTO.getLink('/sboard/list','','')}" class="btn btn-secondary"> List</a>
-                <button class="btn btn-primary">Modify</button>
-                <button class="btn btn-danger">Remove</button>
+                <button class="btn btn-primary modBtn">Modify</button>
+                <button class="btn btn-danger removeBtn">Remove</button>
             </form>
         </div>
     </div>
 
     <script th:inline="javascript">
         $(document).ready(function () {
-            console.log("register...");
-        })
+            console.log("modify...");
+
+            var actionForm = $("#actionForm");
+
+            $(".removeBtn").click(function(e){
+
+                e.preventDefault();
+
+                actionForm.attr("action", "/sboard/remove");
+                actionForm.submit();
+            });
+
+        });
     </script>
 </div>
 <!-- /.container-fluid -->
