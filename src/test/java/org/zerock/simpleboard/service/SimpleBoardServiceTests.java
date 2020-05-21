@@ -1,14 +1,11 @@
 package org.zerock.simpleboard.service;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.SmartFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.zerock.simpleboard.dto.ListRequestDTO;
-import org.zerock.simpleboard.dto.ListResponseDTO;
+import org.zerock.simpleboard.dto.requestpage.SearchRequestDTO;
+import org.zerock.simpleboard.dto.list.ListBoardResponseDTO;
 import org.zerock.simpleboard.dto.SimpleBoardDTO;
-
-import java.util.List;
 
 @SpringBootTest
 public class SimpleBoardServiceTests {
@@ -61,16 +58,16 @@ public class SimpleBoardServiceTests {
     @Test
     public void testList1(){
 
-        ListRequestDTO listRequestDTO = new ListRequestDTO();
+        SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
 
-        listRequestDTO.setPage(1);
-        listRequestDTO.setSize(10);
+        searchRequestDTO.setPage(1);
+        searchRequestDTO.setSize(10);
 
-        ListResponseDTO responseDTO = service.listPage(listRequestDTO);
+        ListBoardResponseDTO responseDTO = service.listPage(searchRequestDTO);
 
         System.out.println(responseDTO);
 
-        responseDTO.getBoardList().stream().forEach(simpleBoardDTO -> {
+        responseDTO.getDtoList().stream().forEach(simpleBoardDTO -> {
             System.out.println(simpleBoardDTO);
         });
 
@@ -80,18 +77,18 @@ public class SimpleBoardServiceTests {
     @Test
     public void testSearch(){
 
-        ListRequestDTO listRequestDTO = new ListRequestDTO();
+        SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
 
-        listRequestDTO.setPage(1);
-        listRequestDTO.setSize(10);
-        listRequestDTO.setType("tc");
-        listRequestDTO.setKeyword("10");
+        searchRequestDTO.setPage(1);
+        searchRequestDTO.setSize(10);
+        searchRequestDTO.setType("tc");
+        searchRequestDTO.setKeyword("10");
 
-        ListResponseDTO responseDTO = service.listSearchPage(listRequestDTO);
+        ListBoardResponseDTO responseDTO = service.listSearchPage(searchRequestDTO);
 
         System.out.println(responseDTO);
 
-        responseDTO.getBoardList().stream().forEach(simpleBoardDTO -> {
+        responseDTO.getDtoList().stream().forEach(simpleBoardDTO -> {
             System.out.println(simpleBoardDTO);
         });
 

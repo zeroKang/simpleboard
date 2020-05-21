@@ -5,14 +5,13 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.zerock.simpleboard.domain.QSimpleBoard;
 import org.zerock.simpleboard.domain.SimpleBoard;
-import org.zerock.simpleboard.dto.ListRequestDTO;
-import org.zerock.simpleboard.dto.ListResponseDTO;
+import org.zerock.simpleboard.dto.requestpage.SearchRequestDTO;
+import org.zerock.simpleboard.dto.list.ListBoardResponseDTO;
 import org.zerock.simpleboard.dto.SimpleBoardDTO;
 import org.zerock.simpleboard.repository.SimpleBoardRepository;
 
@@ -22,8 +21,7 @@ import java.util.Optional;
 @Service
 @Log4j2
 @AllArgsConstructor
-
- class SimpleBoardServiceImpl implements SimpleBoardService {
+class SimpleBoardServiceImpl implements SimpleBoardService {
 
     private SimpleBoardRepository repository;
 
@@ -67,27 +65,27 @@ import java.util.Optional;
     }
 
     @Override
-    public ListResponseDTO listPage(ListRequestDTO listRequestDTO) {
+    public ListBoardResponseDTO listPage(SearchRequestDTO searchRequestDTO) {
 
-        Pageable pageable = listRequestDTO.getPageable(Sort.by("bno").descending());
+        Pageable pageable = searchRequestDTO.getPageable(Sort.by("bno").descending());
 
         Page<SimpleBoard> result = repository.findAll(pageable);
 
-        return new ListResponseDTO(listRequestDTO, result );
+        return new ListBoardResponseDTO(searchRequestDTO, result );
 
     }
 
     @Override
-    public ListResponseDTO listSearchPage(ListRequestDTO listRequestDTO) {
+    public ListBoardResponseDTO listSearchPage(SearchRequestDTO searchRequestDTO) {
 
-        String type = listRequestDTO.getType();
-        String keyword = listRequestDTO.getKeyword();
+        String type = searchRequestDTO.getType();
+        String keyword = searchRequestDTO.getKeyword();
 
         if(type == null || type.isEmpty() || keyword == null|| keyword.isEmpty()){
-            return listPage(listRequestDTO);
+            return listPage(searchRequestDTO);
         }
 
-        Pageable pageRequest = listRequestDTO.getPageable(Sort.by("bno").descending());
+        Pageable pageRequest = searchRequestDTO.getPageable(Sort.by("bno").descending());
 
         String[] typeArr = type.split("");
 
@@ -120,6 +118,6 @@ import java.util.Optional;
 
         Page<SimpleBoard> result = repository.findAll(builder, pageRequest);
 
-        return new ListResponseDTO(listRequestDTO, result);
+        return new ListBoardResponseDTO(searchRequestDTO, result);
     }
 }

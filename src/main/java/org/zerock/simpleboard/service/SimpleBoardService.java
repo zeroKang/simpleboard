@@ -1,8 +1,8 @@
 package org.zerock.simpleboard.service;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.zerock.simpleboard.dto.ListRequestDTO;
-import org.zerock.simpleboard.dto.ListResponseDTO;
+import org.zerock.simpleboard.dto.requestpage.SearchRequestDTO;
+import org.zerock.simpleboard.dto.list.ListBoardResponseDTO;
 import org.zerock.simpleboard.dto.SimpleBoardDTO;
 
 @Transactional
@@ -16,9 +16,9 @@ public interface SimpleBoardService {
 
     void modify(SimpleBoardDTO simpleBoardDTO);
 
-    ListResponseDTO listPage(ListRequestDTO listRequestDTO);
+    ListBoardResponseDTO listPage(SearchRequestDTO searchRequestDTO);
 
-    ListResponseDTO listSearchPage(ListRequestDTO listRequestDTO);
+    ListBoardResponseDTO listSearchPage(SearchRequestDTO searchRequestDTO);
 
 
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.zerock.simpleboard.domain.Reply;
 import org.zerock.simpleboard.domain.ReplyBoard;
@@ -35,13 +36,13 @@ public class ReplyBoardRepositoryTests {
     @Test
     public void insertReply(){
 
-        IntStream.rangeClosed(1,300).forEach(i -> {
+        IntStream.rangeClosed(1,1000).forEach(i -> {
 
-            long bno = (int)(Math.random() * 300) + 1;
+            long bno = (int)(Math.random() * 21) + 280;
 
             ReplyBoard board = ReplyBoard.builder().bno(bno).build();
 
-            Reply reply = Reply.builder().replyBoard(board).reply("Reply............." + bno +"...." + i)
+            Reply reply = Reply.builder().replyBoard(board).replyText("Reply............." + bno +"...." + i)
                     .replyer("replyer" + (i % 10)).build();
 
             System.out.println(replyRepository.save(reply));
@@ -77,4 +78,42 @@ public class ReplyBoardRepositoryTests {
         });
 
     }
+
+    @Test
+    public void testReplyPage(){
+
+        ReplyBoard replyBoard = ReplyBoard.builder().bno(300L).build();
+
+        Pageable pageable = PageRequest.of(0,10);
+
+        Page<Reply> result = replyRepository.findByReplyBoard(replyBoard, pageable);
+
+        System.out.println(result);
+
+        result.getContent().forEach(reply -> {
+            System.out.println(reply);
+            System.out.println(reply.getReplyBoard());
+        });
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

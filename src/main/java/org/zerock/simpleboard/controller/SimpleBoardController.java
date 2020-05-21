@@ -1,7 +1,6 @@
 package org.zerock.simpleboard.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.zerock.simpleboard.dto.ListRequestDTO;
-import org.zerock.simpleboard.dto.ListResponseDTO;
+import org.zerock.simpleboard.dto.requestpage.SearchRequestDTO;
+import org.zerock.simpleboard.dto.list.ListBoardResponseDTO;
 import org.zerock.simpleboard.dto.SimpleBoardDTO;
 import org.zerock.simpleboard.service.SimpleBoardService;
 
@@ -24,10 +23,10 @@ public class SimpleBoardController {
     private SimpleBoardService simpleBoardService;
 
     @GetMapping("/list")
-    public void list(@ModelAttribute("requestDTO") ListRequestDTO listRequestDTO, Model model){
+    public void list(@ModelAttribute("requestDTO") SearchRequestDTO searchRequestDTO, Model model){
         log.info("list..............");
 
-        ListResponseDTO responseDTO = simpleBoardService.listSearchPage(listRequestDTO);
+        ListBoardResponseDTO responseDTO = simpleBoardService.listSearchPage(searchRequestDTO);
 
         model.addAttribute("data", responseDTO);
     }
@@ -51,7 +50,7 @@ public class SimpleBoardController {
     }
 
     @GetMapping({"/read", "/modify"})
-    public void read(Long bno, @ModelAttribute("requestDTO") ListRequestDTO listRequestDTO, Model model){
+    public void read(Long bno, @ModelAttribute("requestDTO") SearchRequestDTO searchRequestDTO, Model model){
 
         log.info("get read...." + bno);
 
@@ -65,15 +64,15 @@ public class SimpleBoardController {
 
     @PostMapping("/modify")
     public String modifyPOST(SimpleBoardDTO simpleBoardDTO,
-                             ListRequestDTO listRequestDTO,
+                             SearchRequestDTO searchRequestDTO,
                              RedirectAttributes redirectAttributes){
 
         log.info("modify post....." + simpleBoardDTO);
-        log.info("requestDTO: " , listRequestDTO);
+        log.info("requestDTO: " , searchRequestDTO);
         simpleBoardService.modify(simpleBoardDTO);
         redirectAttributes.addFlashAttribute("result", "success");
 
-        return "redirect:" + listRequestDTO.getLink("/sboard/read","bno",simpleBoardDTO.getBno());
+        return "redirect:" + searchRequestDTO.getLink("/sboard/read","bno",simpleBoardDTO.getBno());
     }
 
     @PostMapping("/remove")
